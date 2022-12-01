@@ -10,10 +10,10 @@ describe('POST /characters', function () {
     it('deve cadastrar um personagem', function () {
 
         const character = {
-            name: 'Peter Parker',
-            alias: 'Homem Aranha',
+            name: 'Tony Stark',
+            alias: 'Homem de Ferro',
             team: ['vingadores'],
-            active: true
+            active: false
         }
 
         cy.postCharacter(character)
@@ -52,6 +52,70 @@ describe('POST /characters', function () {
                     expect(response.body.error).to.eql('Duplicate character')
                 })
         })
+    })
+
+    it('campo name é obrigatório', function(){
+
+        const character = {
+            alias: 'Homem Aranha',
+            team: ['vingadores'],
+            active: true
+        }
+
+        cy.postCharacter(character)
+            .then(function(response){
+                expect(response.status).to.eql(400)
+                expect(response.body.message).to.eql('Validation failed')
+                expect(response.body.validation.body.message).to.eql('\"name\" is required')
+            })
+    })
+
+    it('campo alias é obrigatório', function(){
+
+        const character = {
+            name: 'Peter Parker',
+            team: ['vingadores'],
+            active: true
+        }
+
+        cy.postCharacter(character)
+            .then(function(response){
+                expect(response.status).to.eql(400)
+                expect(response.body.message).to.eql('Validation failed')
+                expect(response.body.validation.body.message).to.eql('\"alias\" is required')
+            })
+    })
+
+    it('campo team é obrigatório', function(){
+
+        const character = {
+            name: 'Peter Parker',
+            alias: 'Homem Aranha',
+            active: true
+        }
+
+        cy.postCharacter(character)
+            .then(function(response){
+                expect(response.status).to.eql(400)
+                expect(response.body.message).to.eql('Validation failed')
+                expect(response.body.validation.body.message).to.eql('\"team\" is required')
+            })
+    })
+
+    it('campo active é obrigatório', function(){
+
+        const character = {
+            name: 'Peter Parker',
+            alias: 'Homem Aranha',
+            team: ['vingadores']
+        }
+
+        cy.postCharacter(character)
+            .then(function(response){
+                expect(response.status).to.eql(400)
+                expect(response.body.message).to.eql('Validation failed')
+                expect(response.body.validation.body.message).to.eql('\"active\" is required')
+            })
     })
 
 })
