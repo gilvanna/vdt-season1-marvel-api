@@ -49,12 +49,28 @@ Cypress.Commands.add('back2ThePast', function(){
         expect(response.status).to.eql(200)
     })
 })
+
 //POST /characters
 Cypress.Commands.add('postCharacter', function(payload){
     cy.api({
         method: 'POST',
         url: '/characters',
         body: payload,
+        headers: {
+            Authorization: Cypress.env('token')
+        },
+        //para o cypress não falhar quando o status code for diferente de 2xx ou 3xx
+        failOnStatusCode: false
+    }).then(function(response){
+        return response
+    })
+})
+
+//GET /characters
+Cypress.Commands.add('getCharacters', function(payload){
+    cy.api({
+        method: 'GET',
+        url: '/characters',
         headers: {
             Authorization: Cypress.env('token')
         },
