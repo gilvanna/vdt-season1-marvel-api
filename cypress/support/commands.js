@@ -31,7 +31,8 @@ Cypress.Commands.add('setToken', function(){
         body: {
             email: 'gilvanna@gmail.com',
             password: 'qa-cademy'
-        }
+        },
+        failOnStatusCode: false
     }).then(function(response){
         expect(response.status).to.eql(200)
 
@@ -42,8 +43,24 @@ Cypress.Commands.add('setToken', function(){
 Cypress.Commands.add('back2ThePast', function(){
     cy.api({
         method: 'DELETE',
-        url: '/back2thepast/6387633f2e1cb60016a5d097'
+        url: '/back2thepast/6387633f2e1cb60016a5d097',
+        failOnStatusCode: false
     }).then(function(response){
         expect(response.status).to.eql(200)
+    })
+})
+//POST /characters
+Cypress.Commands.add('postCharacter', function(payload){
+    cy.api({
+        method: 'POST',
+        url: '/characters',
+        body: payload,
+        headers: {
+            Authorization: Cypress.env('token')
+        },
+        //para o cypress não falhar quando o status code for diferente de 2xx ou 3xx
+        failOnStatusCode: false
+    }).then(function(response){
+        return response
     })
 })
