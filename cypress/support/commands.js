@@ -80,3 +80,9 @@ Cypress.Commands.add('getCharacters', function(payload){
         return response
     })
 })
+
+Cypress.Commands.add('populateCharacters', function(characters){
+    characters.forEach(function(c){
+        cy.postCharacter(c)
+    })
+})
