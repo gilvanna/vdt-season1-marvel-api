@@ -51,3 +51,47 @@ describe('GET /characters', function () {
         })
     })
 })
+
+describe('GET /character/id', function(){
+
+    before(function () {
+        cy.back2ThePast()
+        cy.setToken()
+    })
+    
+    const steveRogers = {
+        name: 'Steve Rogers',
+        alias: 'Capitão América',
+        team: ['vingadores'],
+        active: true
+    }
+
+    context('quando tenho um personagem cadastrado', function(){
+
+        before(function(){
+            cy.postCharacter(steveRogers).then(function(response){
+                Cypress.env('characterId', response.body.character_id)
+            })
+        })
+
+        it('deve buscar personagem pelo id', function(){
+            const id = Cypress.env('chracterId')
+
+            cy.getCharacterById(id).then(function(response){
+                expect(response.status).to.eql(200)
+                expect(response.body.alias).to.eql('Capitão América')
+                expect(response.body.team).to.eql(['vingadores'])
+                expect(response.body.active).to.eql(true)
+            })
+        })
+    })
+
+    it('deve retornar 404 ao buscar por id não cadastrado', function(){
+        const id = '638a071e8f05638cbc00a467'
+
+            cy.getCharacterById(id).then(function(response){
+                expect(response.status).to.eql(404)
+            })
+    })
+
+})
