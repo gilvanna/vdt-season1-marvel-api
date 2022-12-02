@@ -67,10 +67,26 @@ Cypress.Commands.add('postCharacter', function(payload){
 })
 
 //GET /characters
-Cypress.Commands.add('getCharacters', function(payload){
+Cypress.Commands.add('getCharacters', function(){
     cy.api({
         method: 'GET',
         url: '/characters',
+        headers: {
+            Authorization: Cypress.env('token')
+        },
+        //para o cypress não falhar quando o status code for diferente de 2xx ou 3xx
+        failOnStatusCode: false
+    }).then(function(response){
+        return response
+    })
+})
+
+//GET character by name
+Cypress.Commands.add('searchCharacters', function(characterName){
+    cy.api({
+        method: 'GET',
+        url: '/characters',
+        qs: {name: characterName},
         headers: {
             Authorization: Cypress.env('token')
         },

@@ -39,4 +39,15 @@ describe('GET /characters', function () {
             expect(response.body.length).greaterThan(0)
         })
     })
+
+    it('deve buscar personagem por nome', function(){
+        cy.searchCharacters('Natalia').then(function(response){
+            expect(response.status).to.eql(200)
+            expect(response.body.length).to.eql(1)
+            expect(response.body[0].alias).to.eql('Viúva Negra')
+            expect(response.body[0].team).to.eql(['vingadores'])
+            expect(response.body[0].active).to.eql(false)
+
+        })
+    })
 })
