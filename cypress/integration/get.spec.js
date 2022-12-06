@@ -52,7 +52,7 @@ describe('GET /characters', function () {
     })
 })
 
-describe('GET /character/id', function(){
+describe('GET /characters/id', function(){
 
     before(function () {
         cy.back2ThePast()

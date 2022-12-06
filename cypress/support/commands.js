@@ -112,6 +112,21 @@ Cypress.Commands.add('getCharacterById', function(characterId){
     })
 })
 
+//DELETE character by id
+Cypress.Commands.add('deleteCharacterById', function(characterId){
+    cy.api({
+        method: 'DELETE',
+        url: '/characters/' + characterId,
+        headers: {
+            Authorization: Cypress.env('token')
+        },
+        //para o cypress não falhar quando o status code for diferente de 2xx ou 3xx
+        failOnStatusCode: false
+    }).then(function(response){
+        return response
+    })
+})
+
 Cypress.Commands.add('populateCharacters', function(characters){
     characters.forEach(function(c){
         cy.postCharacter(c)
