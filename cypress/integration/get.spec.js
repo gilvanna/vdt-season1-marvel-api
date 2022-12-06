@@ -24,7 +24,6 @@ describe('GET /characters', function () {
     ]
 
     before(function () {
-        cy.setToken()
         cy.populateCharacters(characters)
     })
 
@@ -52,10 +51,6 @@ describe('GET /characters', function () {
 })
 
 describe('GET /characters/id', function(){
-
-    before(function () {
-        cy.setToken()
-    })
     
     const steveRogers = {
         name: 'Steve Rogers',
