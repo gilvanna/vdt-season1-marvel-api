@@ -3,7 +3,6 @@
 describe('POST /characters', function () {
 
     before(function(){
-        cy.back2ThePast()
         cy.setToken()
     })
 

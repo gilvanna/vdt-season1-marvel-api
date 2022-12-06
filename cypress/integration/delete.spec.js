@@ -1,7 +1,6 @@
 describe('DELETE /characters/id', function(){
 
     before(function () {
-        cy.back2ThePast()
         cy.setToken()
     })
     
